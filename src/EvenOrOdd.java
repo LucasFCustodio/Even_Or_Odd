@@ -16,8 +16,6 @@ public class EvenOrOdd{
 
     //Call this method to begin playing
     public String playEvenOrOdd(String playerChoice, String playerNum) {
-        //For testing
-        playerNum = "Even";
         String result;
         int randNum = random.nextInt(2);
         computerNum = computerChoices[randNum];

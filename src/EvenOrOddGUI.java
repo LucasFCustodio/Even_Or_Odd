@@ -1,16 +1,20 @@
 //frontend
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-public class EvenOrOddGUI extends JFrame{
+public class EvenOrOddGUI extends JFrame implements ActionListener{
     //private variables
     private JLabel computerScoreLabel, playerScoreLabel;
     private JLabel computerChoiceLabel;
     private JLabel resultLabel;
     private JButton evenButton, oddButton, oneButton, twoButton;
     private EvenOrOdd evenOrOdd;
+    String playerNum;
+    String playerChoice;
 
     //constructor
     public EvenOrOddGUI() {
@@ -60,6 +64,7 @@ public class EvenOrOddGUI extends JFrame{
         oddButton.setBounds(75, 380, 150, 80);
         oddButton.setFont(new Font("Dialog", Font.PLAIN, 20));
         oddButton.setHorizontalAlignment(SwingConstants.CENTER);
+        oddButton.addActionListener(this);
         add(oddButton);
 
         //Necessary calls for evenButton
@@ -67,6 +72,7 @@ public class EvenOrOddGUI extends JFrame{
         evenButton.setBounds(275, 380, 150, 80);
         evenButton.setFont(new Font("Dialog", Font.PLAIN, 20));
         evenButton.setHorizontalAlignment(SwingConstants.CENTER);
+        evenButton.addActionListener(this);
         add(evenButton);
 
         //Necessary calls for choice 1
@@ -93,5 +99,23 @@ public class EvenOrOddGUI extends JFrame{
         add(playerScoreLabel);
     }
 
-    private void showResult(String message)
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == evenButton || e.getSource() == oddButton) {
+            playerChoice = e.getActionCommand().toString();
+            return;
+        }
+        //Get player number
+        playerNum = e.getActionCommand().toString();
+
+        //Start the game now that the player has chosen
+        resultLabel.setText(evenOrOdd.playEvenOrOdd(playerChoice, playerNum));
+
+        //load computer choice visually
+        computerChoiceLabel.setText(evenOrOdd.getComputerNum());
+
+        //Update computer score and player score visually
+        playerScoreLabel.setText("Player: " + evenOrOdd.getPlayerScore());
+        computerScoreLabel.setText("Computer: " + evenOrOdd.getComputerScore());
+    }
 }
